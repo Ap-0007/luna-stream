@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LunaStream | High Performance Screen Share</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-meteor"></i>
+                <span>LunaStream</span>
+            </div>
+            <div class="status-badge" id="app-status">
+                <span class="dot"></span> Ready
+            </div>
+        </header>
+
+        <section id="setup-view" class="view">
+            <div class="hero">
+                <h1>Fast. Smooth. <span class="gradient-text">Real-time.</span></h1>
+                <p>Share your screen with zero friction and ultra-low latency.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="mode-card" id="btn-host">
+                    <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>Start Broadcasting</h3>
+                    <p>Share your screen from this laptop to other devices.</p>
+                    <button class="primary-btn">Initialize Stream</button>
+                </div>
+
+                <div class="mode-card" id="btn-viewer">
+                    <div class="card-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>Join a Stream</h3>
+                    <p>Watch a live broadcast from another device.</p>
+                    <div class="input-group">
+                        <input type="text" id="room-input" placeholder="Enter Room ID...">
+                        <button class="secondary-btn">Join</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="host-view" class="view hidden">
+            <div class="stream-control-bar">
+                <div class="room-info">
+                    <span class="label">Room ID:</span>
+                    <span id="display-room-id" class="code">------</span>
+                    <button class="icon-btn" id="copy-room" title="Copy ID"><i class="far fa-copy"></i></button>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat"><i class="fas fa-users"></i> <span id="viewer-count">0</span> Viewers</div>
+                    <div class="stat"><i class="fas fa-bolt"></i> <span id="fps-stat">0</span> FPS</div>
+                </div>
+                <button id="stop-broadcast" class="danger-btn">Stop Sharing</button>
+            </div>
+            
+            <div class="video-container">
+                <video id="local-preview" autoplay muted playsinline></video>
+                <div class="overlay-msg" id="host-overlay">
+                    <i class="fas fa-broadcast-tower fa-spin"></i>
+                    <p>Live & Broadcasting...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="viewer-view" class="view hidden">
+            <div class="viewer-header">
+                <div class="stream-info">
+                    <i class="fas fa-circle-dot live-icon"></i>
+                    <span>Live Stream</span>
+                </div>
+                <button id="leave-stream" class="secondary-btn small">Leave</button>
+            </div>
+            
+            <div class="video-container large">
+                <video id="remote-video" autoplay playsinline></video>
+                <div class="overlay-msg" id="viewer-overlay">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Connecting to host...</p>
+                </div>
+            </div>
+            
+            <div class="floating-controls">
+                <button class="control-btn" id="toggle-fullscreen"><i class="fas fa-expand"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="{{ url_for('static', filename='js/stream.js') }}"></script>
+</body>
+</html>
