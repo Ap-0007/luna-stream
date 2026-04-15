@@ -20,7 +20,7 @@ LunaStream is a high-performance, low-latency screen sharing application built w
 
 1. **Clone and Setup**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/LunaStream.git
+   git clone https://github.com/Ap-0007/LunaStream.git
    cd LunaStream
    ```
 
